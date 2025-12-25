@@ -7,13 +7,18 @@ A minimal PDF viewer built using PySide6 and PyMuPDF, designed as the foundation
 ## Project Structure
 
 pdf_editor_ws/
+
 ├── main.py
+
 ├── viewer.py
+
 ├── document_model.py
+
 ├── architecture.txt
+
 ├── project_goals.txt
-├── README.md
-└── pdfenv/            (optional – local virtual environment)
+
+└── README.md
 
 ---
 
@@ -101,8 +106,8 @@ Key           | Action
 ------------- | ------------------
 → / ↓         | Next page
 ← / ↑         | Previous page
-+             | Zoom in
--             | Zoom out
+\+            | Zoom in
+\-            | Zoom out
 R             | Rotate page
 Enter (in input fields) | Apply value
 
