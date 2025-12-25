@@ -1,0 +1,154 @@
+====================================================
+ PDF EDITOR — DATA MODEL DESCRIPTION
+====================================================
+
+----------------------------------------------------
+1. OVERVIEW
+----------------------------------------------------
+The application uses a logical document model.
+The original PDF files are never modified directly.
+
+Each visible page in the editor is represented by
+a lightweight Page object that references a page
+inside a source PDF file.
+
+The document shown to the user is an ordered list
+of Page objects.
+
+
+----------------------------------------------------
+2. PAGE OBJECT (Logical Page)
+----------------------------------------------------
+
+A Page object represents ONE page in the logical
+document, regardless of which PDF file it comes from.
+
+The Page object DOES NOT store the actual PDF page
+data. It only stores metadata and references.
+
+Page Object Fields:
+-------------------
+- source_document
+    Path or identifier of the original PDF file
+
+- source_page_index
+    Zero-based index of the page inside the source PDF
+
+- rotation
+    Rotation angle in degrees (0, 90, 180, 270)
+
+- overlays (optional)
+    List of image/signature overlays with position data
+
+
+What the Page object DOES:
+-------------------------
+- Identifies where the page comes from
+- Stores how the page should be transformed
+- Stores overlay information (optional)
+
+What the Page object DOES NOT do:
+--------------------------------
+- Does not store rendered images
+- Does not store PDF page objects
+- Does not modify source PDFs
+
+
+----------------------------------------------------
+3. DOCUMENT MODEL
+----------------------------------------------------
+
+The Document represents the working document
+shown in the editor.
+
+It is an ordered list of Page objects.
+
+Document Structure:
+-------------------
+- pages = [Page, Page, Page, ...]
+
+Page number shown to the user:
+------------------------------
+- page_number = index in list + 1
+
+
+What the Document DOES:
+----------------------
+- Maintains page order
+- Allows pages to be added, removed, or reordered
+- Acts as the single source of truth
+
+What the Document DOES NOT do:
+------------------------------
+- Does not render pages
+- Does not write PDF files
+
+
+----------------------------------------------------
+4. VIEWER COMPONENT
+----------------------------------------------------
+
+The Viewer is responsible for rendering pages
+on the screen.
+
+It uses the Document model to decide WHICH page
+to render, but does not store state permanently.
+
+
+Viewer Rendering Workflow:
+--------------------------
+1. User navigates to page N
+2. Viewer retrieves Page object at index N
+3. Viewer opens the source PDF file
+4. Viewer loads the source page using a PDF engine
+5. Viewer applies rotation and zoom
+6. Viewer renders page to an image
+7. Viewer displays the image
+8. Rendered data may be cached temporarily
+
+
+----------------------------------------------------
+5. EXPORT COMPONENT
+----------------------------------------------------
+
+The Exporter creates the final PDF file.
+
+Export Workflow:
+----------------
+1. Iterate through Document.pages in order
+2. For each Page object:
+   - Open source PDF
+   - Extract source page
+   - Apply rotation
+   - Apply overlays
+   - Append to output PDF
+3. Write output PDF to disk
+
+Original PDFs remain unchanged.
+
+
+----------------------------------------------------
+6. WHY PAGES ARE NOT STORED DIRECTLY
+----------------------------------------------------
+
+PDF pages are large and memory-heavy.
+
+Storing them directly inside Page objects would:
+- Waste memory
+- Slow down large documents
+- Make merging many PDFs inefficient
+
+Instead, pages are loaded only when needed
+(viewing or exporting) and released immediately.
+
+
+----------------------------------------------------
+7. KEY DESIGN RULES
+----------------------------------------------------
+
+- Page objects are references, not containers
+- Document order defines page order
+- Viewer renders on demand
+- Exporter commits changes only at save time
+
+====================================================
