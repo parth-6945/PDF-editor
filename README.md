@@ -122,6 +122,7 @@ pyinstaller --onefile --windowed --name pdf-editor main.py
     │  ├─ __init__.py
     ├─ document_model.py     # Document and Page models
     ├─ main.py               # Application entry point
+    ├─ viewer.py 
     ├─ requirements.txt      # Python dependencies
     ├─ README.md
 
