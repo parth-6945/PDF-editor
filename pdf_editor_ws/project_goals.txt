@@ -1,0 +1,119 @@
+====================================================
+ PDF VIEWER + EDITOR — PROJECT GOALS CHECKLIST
+====================================================
+
+----------------------------------------------------
+1. VIEWING / READER GOALS
+----------------------------------------------------
+[ ] Open and view PDF files reliably
+[ ] Smooth scrolling through pages
+[ ] Single-page view mode
+[ ] Double-page view mode
+[ ] Fit-to-width view
+[ ] Zoom in / zoom out
+[ ] Page navigation (next / previous / jump to page)
+[ ] Correct rendering after rotation
+
+
+----------------------------------------------------
+2. PAGE SELECTION GOALS (VERY IMPORTANT)
+----------------------------------------------------
+[ ] Select a single page using a number (e.g. 5)
+[ ] Select multiple pages using commas (e.g. 1,3,7)
+[ ] Select a range of pages using dash (e.g. 4-10)
+[ ] Select odd pages
+[ ] Select even pages
+[ ] Combine multiple selection rules (e.g. 1-3,odd)
+[ ] Invert selection (e.g. !2-5, !odd)
+[ ] Robust parsing and validation of user input
+
+
+----------------------------------------------------
+3. PDF EDITING GOALS
+----------------------------------------------------
+
+3.1 Merge & Reorder
+-------------------
+[ ] Merge any number of PDF files
+[ ] Preserve page order across merged files
+[ ] Allow reordering pages logically (model-level)
+
+3.2 Page Removal
+----------------
+[ ] Remove selected pages from the document
+[ ] Removal based on advanced page selection syntax
+
+3.3 Page Rotation
+-----------------
+[ ] Rotate selected pages (90°, 180°, 270°)
+[ ] Store rotation state per page
+[ ] Reflect rotation correctly in the viewer
+[ ] Apply rotation correctly on export
+
+
+----------------------------------------------------
+4. OPTIONAL EDITING GOALS (LOWER PRIORITY)
+----------------------------------------------------
+[ ] Add image or signature to a PDF page
+[ ] Support PNG / JPG images
+[ ] Place image on any selected page
+[ ] Export image overlays correctly into final PDF
+
+
+----------------------------------------------------
+5. EXPORT / OUTPUT GOALS
+----------------------------------------------------
+[ ] Export edited content to a new PDF
+[ ] Preserve original PDFs unmodified
+[ ] Apply page order, deletion, and rotation correctly
+[ ] Apply optional image/signature overlays
+[ ] Handle large PDFs without corruption
+
+
+----------------------------------------------------
+6. ARCHITECTURE & DESIGN GOALS
+----------------------------------------------------
+[ ] Separate viewer logic from PDF manipulation
+[ ] Maintain a logical page model (not direct editing)
+[ ] Avoid in-place modification of original files
+[ ] Make future features (undo, thumbnails) possible
+
+
+----------------------------------------------------
+7. GUI & USABILITY GOALS
+----------------------------------------------------
+[ ] Clean, simple interface (not cluttered)
+[ ] Toolbar/menu for common actions
+[ ] Text input for page selection
+[ ] Clear error messages for invalid input
+[ ] Responsive UI during PDF loading
+
+
+----------------------------------------------------
+8. CROSS-PLATFORM & DISTRIBUTION GOALS
+----------------------------------------------------
+[ ] Runs on Linux, Windows, and macOS
+[ ] Single executable or app bundle per platform
+[ ] No Python installation required for users
+[ ] Minimal dependency issues after packaging
+[ ] Simple “double-click to run” experience
+
+
+----------------------------------------------------
+9. QUALITY & STABILITY GOALS
+----------------------------------------------------
+[ ] Handle invalid PDFs gracefully
+[ ] Handle invalid page selections safely
+[ ] Prevent crashes during export
+[ ] Clean up temporary files properly
+
+
+----------------------------------------------------
+10. EXPLICITLY OUT OF SCOPE (FOR NOW)
+----------------------------------------------------
+[ ] Full inline text editing (NOT PLANNED)
+[ ] Rich annotations / comments (NOT PLANNED)
+[ ] OCR (NOT PLANNED)
+[ ] Cloud sync or online features (NOT PLANNED)
+
+====================================================
