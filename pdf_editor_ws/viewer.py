@@ -1,12 +1,50 @@
 # viewer.py
 from PySide6.QtWidgets import (
-    QLabel, QMainWindow, QToolBar,
-    QStatusBar, QFileDialog, QLineEdit, QScrollArea
+    QLabel, QMainWindow, QToolBar, QVBoxLayout, QPushButton,
+    QStatusBar, QFileDialog, QLineEdit, QScrollArea, QDialog
 )
 from PySide6.QtGui import QAction, QImage, QPixmap
 from PySide6.QtCore import Qt
 from document_model import Document
 import fitz  # PyMuPDF
+
+class AboutDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("About PDF Editor")
+        self.setFixedSize(400, 250)
+
+        layout = QVBoxLayout()
+
+        title = QLabel("<h2>PDF Editor</h2>")
+        title.setAlignment(Qt.AlignCenter)
+
+        version = QLabel("Version: 1.0")
+        version.setAlignment(Qt.AlignCenter)
+
+        author = QLabel("Developed by Parth Gargate")
+        author.setAlignment(Qt.AlignCenter)
+
+        description = QLabel(
+            "A lightweight PDF editor to view, rearrange, rotate, duplicate,\n"
+            "merge, and export PDF pages across platforms.\n"
+            "You can contribute to the project on Github in the repository : \n"
+            "parth-6945/PDF-editor."
+        )
+        description.setAlignment(Qt.AlignCenter)
+        description.setWordWrap(True)
+
+        btn_close = QPushButton("Close")
+        btn_close.clicked.connect(self.close)
+
+        layout.addWidget(title)
+        layout.addWidget(version)
+        layout.addWidget(author)
+        layout.addWidget(description)
+        layout.addStretch()
+        layout.addWidget(btn_close)
+
+        self.setLayout(layout)
 
 
 class PDFViewer(QMainWindow):
@@ -84,6 +122,9 @@ class PDFViewer(QMainWindow):
         file_menu = self.menuBar().addMenu("File")
         file_menu.addAction(QAction("Open PDF", self, triggered=self.open_pdf))
         file_menu.addAction(QAction("Exit", self, triggered=self.close))
+        about_action = QAction("About", self)
+        about_action.triggered.connect(self.show_about)
+        file_menu.addAction(about_action)
 
     # ---------- PDF ----------
     def open_pdf(self):
@@ -210,3 +251,8 @@ class PDFViewer(QMainWindow):
         from edit_mode.editor import PDFEditor
         self.editor_window = PDFEditor(self.document)
         self.editor_window.show()
+
+    def show_about(self):
+        dlg = AboutDialog()
+        dlg.exec()  # Modal dialog
+
